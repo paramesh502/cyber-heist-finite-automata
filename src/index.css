@@ -1,0 +1,307 @@
+/* ============================================================
+   Cyber Heist — Global Styles
+   Cyberpunk / Dark Terminal aesthetic
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&display=swap');
+
+:root {
+  /* Palette */
+  --bg-primary: #090e1a;
+  --bg-secondary: #0d1525;
+  --bg-card: #111927;
+  --bg-card-hover: #162035;
+  --border-color: #1e3a5f;
+  --border-glow: #00d4ff;
+
+  --neon-cyan: #00d4ff;
+  --neon-green: #00ff88;
+  --neon-blue: #4488ff;
+  --neon-purple: #aa44ff;
+  --neon-red: #ff4444;
+  --neon-orange: #ff8844;
+  --neon-yellow: #ffdd00;
+
+  --text-primary: #e0f0ff;
+  --text-secondary: #7a9bbf;
+  --text-muted: #4a6a8f;
+  --text-accent: #00d4ff;
+
+  /* Fonts */
+  --font-mono: 'Share Tech Mono', monospace;
+  --font-heading: 'Orbitron', sans-serif;
+  --font-body: 'Rajdhani', sans-serif;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 400ms ease;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--neon-cyan); }
+
+/* Headings */
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+}
+
+/* Links */
+a { color: var(--neon-cyan); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Grid background */
+.grid-bg {
+  background-image:
+    linear-gradient(var(--border-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-color: var(--bg-primary);
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.4rem;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  background: transparent;
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  color: var(--neon-cyan);
+  border-color: var(--neon-cyan);
+  background: rgba(0, 212, 255, 0.08);
+}
+.btn-primary:hover:not(:disabled) {
+  background: rgba(0, 212, 255, 0.2);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.btn-success {
+  color: var(--neon-green);
+  border-color: var(--neon-green);
+  background: rgba(0, 255, 136, 0.08);
+}
+.btn-success:hover:not(:disabled) {
+  background: rgba(0, 255, 136, 0.2);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+.btn-danger {
+  color: var(--neon-red);
+  border-color: var(--neon-red);
+  background: rgba(255, 68, 68, 0.08);
+}
+.btn-danger:hover:not(:disabled) {
+  background: rgba(255, 68, 68, 0.2);
+}
+
+.btn-secondary {
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+  background: rgba(255,255,255,0.03);
+}
+.btn-secondary:hover:not(:disabled) {
+  color: var(--text-primary);
+  border-color: var(--text-secondary);
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--text-secondary);
+  background: transparent;
+  padding: 0.4rem 0.8rem;
+}
+.btn-ghost:hover:not(:disabled) {
+  color: var(--neon-cyan);
+  border-color: transparent;
+}
+
+.btn-sm {
+  padding: 0.35rem 0.9rem;
+  font-size: 0.75rem;
+}
+
+.btn-lg {
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+}
+
+/* ============================================================
+   Cards
+   ============================================================ */
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.25rem;
+}
+
+.card-glow {
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.08);
+}
+
+/* ============================================================
+   Inputs
+   ============================================================ */
+
+.input {
+  background: rgba(0,0,0,0.4);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  padding: 0.5rem 0.75rem;
+  width: 100%;
+  transition: border-color var(--transition-fast);
+  outline: none;
+}
+
+.input:focus {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.15);
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   Status badges
+   ============================================================ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 3px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: var(--font-heading);
+}
+
+.badge-rookie   { background: rgba(0,255,136,0.12); color: var(--neon-green); border: 1px solid rgba(0,255,136,0.3); }
+.badge-hacker   { background: rgba(0,212,255,0.12); color: var(--neon-cyan); border: 1px solid rgba(0,212,255,0.3); }
+.badge-elite    { background: rgba(170,68,255,0.12); color: var(--neon-purple); border: 1px solid rgba(170,68,255,0.3); }
+.badge-master   { background: rgba(255,68,68,0.12); color: var(--neon-red); border: 1px solid rgba(255,68,68,0.3); }
+
+/* ============================================================
+   Animations
+   ============================================================ */
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(0, 212, 255, 0.4); }
+  50%       { box-shadow: 0 0 20px rgba(0, 212, 255, 0.8); }
+}
+
+@keyframes scan-line {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes flicker {
+  0%, 100%  { opacity: 1; }
+  92%        { opacity: 1; }
+  93%        { opacity: 0.8; }
+  94%        { opacity: 1; }
+  96%        { opacity: 0.7; }
+  97%        { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-30px); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.anim-slide-left { animation: slideInLeft 0.4s ease both; }
+.anim-slide-up   { animation: slideInUp 0.4s ease both; }
+.anim-fade-in    { animation: fadeIn 0.3s ease both; }
+
+/* ============================================================
+   Glow utilities
+   ============================================================ */
+
+.glow-cyan   { text-shadow: 0 0 12px rgba(0,212,255,0.7); }
+.glow-green  { text-shadow: 0 0 12px rgba(0,255,136,0.7); }
+.glow-red    { text-shadow: 0 0 12px rgba(255,68,68,0.7); }
+.glow-purple { text-shadow: 0 0 12px rgba(170,68,255,0.7); }
+
+/* ============================================================
+   Utility
+   ============================================================ */
+
+.mono { font-family: var(--font-mono); }
+.heading { font-family: var(--font-heading); }
+.text-accent { color: var(--text-accent); }
+.text-muted  { color: var(--text-muted); }
+.text-green  { color: var(--neon-green); }
+.text-red    { color: var(--neon-red); }
+.text-cyan   { color: var(--neon-cyan); }
+.text-purple { color: var(--neon-purple); }
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 1rem 0;
+}
