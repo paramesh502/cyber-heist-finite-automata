@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  JFLAP Automaton Export — Cyber Heist: Crack the Vault
+  Level 8: Final Vault
+  Type: NFA with epsilon (ε) transitions
+  Description: Accepts strings over {a,b} matching (ab)* OR ending in "aa".
+  Language: (ab)* ∪ (a+b)*aa
+
+  States:
+    s0 — initial (branches via ε to s1 and s4)
+
+    Branch 1: (ab)*
+      s1 — start of branch 1 (ε to s3 for empty string)
+      s2 — seen 'a' in current (ab) repetition
+      s3 — accepting: completed one (ab) or empty
+
+    Branch 2: ends in "aa"
+      s4 — start of branch 2 (loops on a and b)
+      s5 — seen one trailing 'a'
+      s6 — accepting: seen "aa" at end
+
+  Epsilon-closure of s0 = {s0, s1, s4}
+  s1 has ε to s3, so ε-closure of s0 = {s0, s1, s3, s4}
+  → empty string is accepted via s3.
+
+  Test cases:
+    ""       -> ACCEPT  ((ab)^0 = empty)
+    "ab"     -> ACCEPT  ((ab)^1)
+    "abab"   -> ACCEPT  ((ab)^2)
+    "aa"     -> ACCEPT  (ends in "aa")
+    "baa"    -> ACCEPT  (ends in "aa")
+    "abaaa"  -> ACCEPT  (ends in "aa")
+    "a"      -> REJECT
+    "ba"     -> REJECT  (ends in "a" not "aa")
+    "abb"    -> REJECT
+    "b"      -> REJECT
+-->
+<structure>
+  <type>fa</type>
+  <automaton>
+    <state id="0" name="s0" x="60.0" y="200.0">
+      <initial/>
+    </state>
+    <!-- Branch 1: (ab)* -->
+    <state id="1" name="s1" x="210.0" y="100.0">
+    </state>
+    <state id="2" name="s2" x="330.0" y="100.0">
+    </state>
+    <state id="3" name="s3" x="450.0" y="100.0">
+      <final/>
+    </state>
+    <!-- Branch 2: ends in "aa" -->
+    <state id="4" name="s4" x="210.0" y="300.0">
+    </state>
+    <state id="5" name="s5" x="330.0" y="300.0">
+    </state>
+    <state id="6" name="s6" x="450.0" y="300.0">
+      <final/>
+    </state>
+    <!-- Epsilon from s0 to both branches -->
+    <transition>
+      <from>0</from><to>1</to><read/>
+    </transition>
+    <transition>
+      <from>0</from><to>4</to><read/>
+    </transition>
+    <!-- Branch 1: (ab)* transitions -->
+    <transition>
+      <from>1</from><to>3</to><read/>
+    </transition>
+    <transition>
+      <from>1</from><to>2</to><read>a</read>
+    </transition>
+    <transition>
+      <from>2</from><to>3</to><read>b</read>
+    </transition>
+    <transition>
+      <from>3</from><to>2</to><read>a</read>
+    </transition>
+    <!-- Branch 2: (a+b)*aa transitions -->
+    <transition>
+      <from>4</from><to>4</to><read>a</read>
+    </transition>
+    <transition>
+      <from>4</from><to>4</to><read>b</read>
+    </transition>
+    <transition>
+      <from>4</from><to>5</to><read>a</read>
+    </transition>
+    <transition>
+      <from>5</from><to>6</to><read>a</read>
+    </transition>
+  </automaton>
+</structure>

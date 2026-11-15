@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  JFLAP Automaton Export — Cyber Heist: Crack the Vault
+  Level 2: Binary Access Code
+  Type: DFA
+  Description: Accepts binary strings ending in "01".
+  Language: (0+1)*01
+
+  States:
+    q0 — start: last char was '1' (or nothing read yet)
+    q1 — last char was '0'
+    q2 — accepting: last two chars were "01"
+
+  Transition table:
+    δ(q0, 0) = q1    δ(q0, 1) = q0
+    δ(q1, 0) = q1    δ(q1, 1) = q2
+    δ(q2, 0) = q1    δ(q2, 1) = q0
+
+  Test cases:
+    "01"    -> ACCEPT
+    "101"   -> ACCEPT
+    "1101"  -> ACCEPT
+    "001"   -> ACCEPT
+    "10"    -> REJECT
+    "111"   -> REJECT
+    "0"     -> REJECT
+    "010"   -> REJECT
+    ""      -> REJECT
+-->
+<structure>
+  <type>fa</type>
+  <automaton>
+    <state id="0" name="q0" x="90.0" y="200.0">
+      <initial/>
+    </state>
+    <state id="1" name="q1" x="300.0" y="200.0">
+    </state>
+    <state id="2" name="q2" x="510.0" y="200.0">
+      <final/>
+    </state>
+    <transition>
+      <from>0</from><to>1</to><read>0</read>
+    </transition>
+    <transition>
+      <from>0</from><to>0</to><read>1</read>
+    </transition>
+    <transition>
+      <from>1</from><to>1</to><read>0</read>
+    </transition>
+    <transition>
+      <from>1</from><to>2</to><read>1</read>
+    </transition>
+    <transition>
+      <from>2</from><to>1</to><read>0</read>
+    </transition>
+    <transition>
+      <from>2</from><to>0</to><read>1</read>
+    </transition>
+  </automaton>
+</structure>

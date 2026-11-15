@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  JFLAP Automaton Export — Cyber Heist: Crack the Vault
+  Level 7: Reverse Engineering
+  Type: DFA
+  Description: Accepts binary strings whose numeric value (base 2) is divisible by 3.
+  Language: { w ∈ {0,1}* | value(w) mod 3 = 0 }
+
+  States:
+    r0 — start AND accepting: remainder = 0  (mod 3)
+    r1 — remainder = 1  (mod 3)
+    r2 — remainder = 2  (mod 3)
+
+  How it works:
+    Reading binary left-to-right: appending bit b to number n gives 2n + b.
+    So new remainder = (2 * old_remainder + b) mod 3.
+
+    δ(r0, 0) = r0   [ (2*0+0) mod 3 = 0 ]
+    δ(r0, 1) = r1   [ (2*0+1) mod 3 = 1 ]
+    δ(r1, 0) = r2   [ (2*1+0) mod 3 = 2 ]
+    δ(r1, 1) = r0   [ (2*1+1) mod 3 = 0 ]
+    δ(r2, 0) = r1   [ (2*2+0) mod 3 = 1 ]
+    δ(r2, 1) = r2   [ (2*2+1) mod 3 = 2 ]
+
+  Test cases:
+    "0"     -> ACCEPT  (0 mod 3 = 0)
+    "11"    -> ACCEPT  (3 mod 3 = 0)
+    "110"   -> ACCEPT  (6 mod 3 = 0)
+    "1001"  -> ACCEPT  (9 mod 3 = 0)
+    "1100"  -> ACCEPT  (12 mod 3 = 0)
+    "1"     -> REJECT  (1 mod 3 = 1)
+    "10"    -> REJECT  (2 mod 3 = 2)
+    "100"   -> REJECT  (4 mod 3 = 1)
+    "101"   -> REJECT  (5 mod 3 = 2)
+
+  VIVA TIP: This DFA computes arithmetic! The 3 states represent the
+  three possible remainders when dividing a binary number by 3.
+-->
+<structure>
+  <type>fa</type>
+  <automaton>
+    <state id="0" name="r0" x="120.0" y="200.0">
+      <initial/>
+      <final/>
+    </state>
+    <state id="1" name="r1" x="300.0" y="100.0">
+    </state>
+    <state id="2" name="r2" x="300.0" y="300.0">
+    </state>
+    <transition>
+      <from>0</from><to>0</to><read>0</read>
+    </transition>
+    <transition>
+      <from>0</from><to>1</to><read>1</read>
+    </transition>
+    <transition>
+      <from>1</from><to>2</to><read>0</read>
+    </transition>
+    <transition>
+      <from>1</from><to>0</to><read>1</read>
+    </transition>
+    <transition>
+      <from>2</from><to>1</to><read>0</read>
+    </transition>
+    <transition>
+      <from>2</from><to>2</to><read>1</read>
+    </transition>
+  </automaton>
+</structure>

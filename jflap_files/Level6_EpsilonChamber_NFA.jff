@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  JFLAP Automaton Export — Cyber Heist: Crack the Vault
+  Level 6: The Epsilon Chamber
+  Type: NFA with epsilon (ε) transitions
+  Description: Accepts strings over {a,b,c} that are a*, b*, or c*.
+  Language: a* ∪ b* ∪ c*
+
+  States:
+    q0 — initial (branches via ε to q1, q2, q3)
+    q1 — branch a: start
+    q2 — branch b: start
+    q3 — branch c: start
+    q4 — accepting: one or more 'a's
+    q5 — accepting: one or more 'b's
+    q6 — accepting: one or more 'c's
+
+  Epsilon-closure of q0 = {q0, q1, q2, q3}
+  All three branches are active from the start.
+
+  NOTE: Empty string is NOT accepted (no branch's accepting state
+  is reachable via ε alone without consuming input).
+
+  Test cases:
+    "a"     -> ACCEPT
+    "aaa"   -> ACCEPT
+    "b"     -> ACCEPT
+    "bbb"   -> ACCEPT
+    "c"     -> ACCEPT
+    "cc"    -> ACCEPT
+    "ab"    -> REJECT  (mixed)
+    "abc"   -> REJECT
+    "ba"    -> REJECT
+
+  In JFLAP: epsilon transitions appear as λ (lambda) in some versions.
+  Open file → you will see dashed arrows for ε transitions.
+-->
+<structure>
+  <type>fa</type>
+  <automaton>
+    <state id="0" name="q0" x="90.0" y="200.0">
+      <initial/>
+    </state>
+    <state id="1" name="q1" x="270.0" y="80.0">
+    </state>
+    <state id="2" name="q2" x="270.0" y="200.0">
+    </state>
+    <state id="3" name="q3" x="270.0" y="320.0">
+    </state>
+    <state id="4" name="q4" x="450.0" y="80.0">
+      <final/>
+    </state>
+    <state id="5" name="q5" x="450.0" y="200.0">
+      <final/>
+    </state>
+    <state id="6" name="q6" x="450.0" y="320.0">
+      <final/>
+    </state>
+    <!-- Epsilon transitions from q0 -->
+    <transition>
+      <from>0</from><to>1</to><read/>
+    </transition>
+    <transition>
+      <from>0</from><to>2</to><read/>
+    </transition>
+    <transition>
+      <from>0</from><to>3</to><read/>
+    </transition>
+    <!-- Branch a* -->
+    <transition>
+      <from>1</from><to>4</to><read>a</read>
+    </transition>
+    <transition>
+      <from>4</from><to>4</to><read>a</read>
+    </transition>
+    <!-- Branch b* -->
+    <transition>
+      <from>2</from><to>5</to><read>b</read>
+    </transition>
+    <transition>
+      <from>5</from><to>5</to><read>b</read>
+    </transition>
+    <!-- Branch c* -->
+    <transition>
+      <from>3</from><to>6</to><read>c</read>
+    </transition>
+    <transition>
+      <from>6</from><to>6</to><read>c</read>
+    </transition>
+  </automaton>
+</structure>

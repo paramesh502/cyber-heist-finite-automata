@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  JFLAP Automaton Export — Cyber Heist: Crack the Vault
+  Level 4: Pattern Recognition
+  Type: DFA
+  Description: Accepts binary strings containing the substring "101".
+  Language: (0+1)*101(0+1)*
+
+  States:
+    q0 — start: no progress toward "101"
+    q1 — seen "1" (progress: 1 char matched)
+    q2 — seen "10" (progress: 2 chars matched)
+    q3 — accepting: seen "101" (pattern found, sink state)
+
+  Transition table:
+    δ(q0, 0) = q0    δ(q0, 1) = q1
+    δ(q1, 0) = q2    δ(q1, 1) = q1
+    δ(q2, 0) = q0    δ(q2, 1) = q3
+    δ(q3, 0) = q3    δ(q3, 1) = q3   ← once found, always accepting
+
+  Test cases:
+    "101"    -> ACCEPT
+    "1101"   -> ACCEPT
+    "0101"   -> ACCEPT
+    "10101"  -> ACCEPT
+    "1001"   -> REJECT
+    "000"    -> REJECT
+    "11"     -> REJECT
+    "10"     -> REJECT
+    ""       -> REJECT
+-->
+<structure>
+  <type>fa</type>
+  <automaton>
+    <state id="0" name="q0" x="90.0" y="200.0">
+      <initial/>
+    </state>
+    <state id="1" name="q1" x="228.0" y="200.0">
+    </state>
+    <state id="2" name="q2" x="366.0" y="200.0">
+    </state>
+    <state id="3" name="q3" x="504.0" y="200.0">
+      <final/>
+    </state>
+    <transition>
+      <from>0</from><to>0</to><read>0</read>
+    </transition>
+    <transition>
+      <from>0</from><to>1</to><read>1</read>
+    </transition>
+    <transition>
+      <from>1</from><to>2</to><read>0</read>
+    </transition>
+    <transition>
+      <from>1</from><to>1</to><read>1</read>
+    </transition>
+    <transition>
+      <from>2</from><to>0</to><read>0</read>
+    </transition>
+    <transition>
+      <from>2</from><to>3</to><read>1</read>
+    </transition>
+    <transition>
+      <from>3</from><to>3</to><read>0</read>
+    </transition>
+    <transition>
+      <from>3</from><to>3</to><read>1</read>
+    </transition>
+  </automaton>
+</structure>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  JFLAP Automaton Export — Cyber Heist: Crack the Vault
+  Level 5: The Nondeterministic Vault
+  Type: NFA
+  Description: Accepts strings over {0,1} that start with "0" OR end in "1".
+  Language: 0(0+1)* ∪ (0+1)*1
+
+  States:
+    q0 — initial state
+    q1 — accepting: entered via '0' from q0 (branch A: starts with 0)
+    q2 — branch B intermediate: last symbol was '0'
+    q3 — intermediate: last symbol was '1' in branch B
+    q4 — accepting: reached via '1' (branch B: ends with 1)
+
+  Branch A (starts with 0):
+    q0 --0--> q1 (accepting, loops on 0 and 1)
+
+  Branch B (ends with 1):
+    q0 --0--> q2, q0 --1--> q3/q4
+    track last symbol; q4 accepts when last was '1'
+
+  NFA: from q0 on '1', we simultaneously go to q3 AND q4.
+
+  Test cases:
+    "0"     -> ACCEPT  (starts with 0)
+    "1"     -> ACCEPT  (ends with 1)
+    "01"    -> ACCEPT  (both conditions)
+    "11"    -> ACCEPT  (ends with 1)
+    "001"   -> ACCEPT  (starts with 0, ends with 1)
+    "10"    -> REJECT  (starts with 1, ends with 0)
+    "100"   -> REJECT  (starts with 1, ends with 0)
+
+  NOTE: Open in JFLAP → Input → Multiple Run to verify.
+  JFLAP will show all NFA paths simultaneously.
+-->
+<structure>
+  <type>fa</type>
+  <automaton>
+    <state id="0" name="q0" x="72.0" y="200.0">
+      <initial/>
+    </state>
+    <state id="1" name="q1" x="252.0" y="100.0">
+      <final/>
+    </state>
+    <state id="2" name="q2" x="252.0" y="300.0">
+    </state>
+    <state id="3" name="q3" x="432.0" y="300.0">
+    </state>
+    <state id="4" name="q4" x="528.0" y="200.0">
+      <final/>
+    </state>
+    <!-- Branch A: starts with 0 -->
+    <transition>
+      <from>0</from><to>1</to><read>0</read>
+    </transition>
+    <transition>
+      <from>1</from><to>1</to><read>0</read>
+    </transition>
+    <transition>
+      <from>1</from><to>1</to><read>1</read>
+    </transition>
+    <!-- Branch B: ends with 1 -->
+    <transition>
+      <from>0</from><to>2</to><read>0</read>
+    </transition>
+    <transition>
+      <from>0</from><to>3</to><read>1</read>
+    </transition>
+    <transition>
+      <from>0</from><to>4</to><read>1</read>
+    </transition>
+    <transition>
+      <from>2</from><to>2</to><read>0</read>
+    </transition>
+    <transition>
+      <from>2</from><to>3</to><read>1</read>
+    </transition>
+    <transition>
+      <from>2</from><to>4</to><read>1</read>
+    </transition>
+    <transition>
+      <from>3</from><to>2</to><read>0</read>
+    </transition>
+    <transition>
+      <from>3</from><to>3</to><read>1</read>
+    </transition>
+    <transition>
+      <from>4</from><to>2</to><read>0</read>
+    </transition>
+    <transition>
+      <from>4</from><to>4</to><read>1</read>
+    </transition>
+  </automaton>
+</structure>

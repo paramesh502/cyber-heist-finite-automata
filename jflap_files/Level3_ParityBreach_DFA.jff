@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  JFLAP Automaton Export — Cyber Heist: Crack the Vault
+  Level 3: Parity Breach
+  Type: DFA
+  Description: Accepts binary strings containing an even number of 1s.
+  Language: strings over {0,1} where count(1) mod 2 = 0
+
+  States:
+    even — start AND accepting: even number of 1s seen so far (0, 2, 4, ...)
+    odd  — odd number of 1s seen so far (1, 3, 5, ...)
+
+  Transition table:
+    δ(even, 0) = even    δ(even, 1) = odd
+    δ(odd,  0) = odd     δ(odd,  1) = even
+
+  Key insight: reading '0' never changes parity; reading '1' flips it.
+
+  Test cases:
+    ""      -> ACCEPT  (zero 1s, zero is even)
+    "0"     -> ACCEPT
+    "11"    -> ACCEPT  (two 1s)
+    "1010"  -> ACCEPT  (two 1s)
+    "1100"  -> ACCEPT  (two 1s)
+    "1"     -> REJECT  (one 1)
+    "10"    -> REJECT  (one 1)
+    "111"   -> REJECT  (three 1s)
+-->
+<structure>
+  <type>fa</type>
+  <automaton>
+    <state id="0" name="even" x="180.0" y="200.0">
+      <initial/>
+      <final/>
+    </state>
+    <state id="1" name="odd" x="420.0" y="200.0">
+    </state>
+    <transition>
+      <from>0</from><to>0</to><read>0</read>
+    </transition>
+    <transition>
+      <from>0</from><to>1</to><read>1</read>
+    </transition>
+    <transition>
+      <from>1</from><to>1</to><read>0</read>
+    </transition>
+    <transition>
+      <from>1</from><to>0</to><read>1</read>
+    </transition>
+  </automaton>
+</structure>

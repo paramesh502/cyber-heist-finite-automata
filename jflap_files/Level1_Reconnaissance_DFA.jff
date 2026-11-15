@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  JFLAP Automaton Export — Cyber Heist: Crack the Vault
+  Level 1: Reconnaissance
+  Type: DFA
+  Description: Accepts strings over {a,b} that begin with "a".
+  Language: a(a+b)*  — any string starting with 'a'
+  
+  States:
+    q0 — start state (no input read)
+    q1 — accepting state (first symbol was 'a'; stays here forever)
+    q2 — dead/trap state (first symbol was 'b'; stays here forever)
+
+  How to test in JFLAP:
+    1. File > Open this file
+    2. Input > Multiple Run
+    3. Enter test strings below and click Run All
+
+  Test cases:
+    "a"    -> ACCEPT
+    "ab"   -> ACCEPT
+    "aba"  -> ACCEPT
+    "b"    -> REJECT
+    "ba"   -> REJECT
+    ""     -> REJECT  (empty string)
+-->
+<structure>
+  <type>fa</type>
+  <automaton>
+    <state id="0" name="q0" x="120.0" y="200.0">
+      <initial/>
+    </state>
+    <state id="1" name="q1" x="300.0" y="200.0">
+      <final/>
+    </state>
+    <state id="2" name="q2" x="480.0" y="200.0">
+    </state>
+    <transition>
+      <from>0</from><to>1</to><read>a</read>
+    </transition>
+    <transition>
+      <from>0</from><to>2</to><read>b</read>
+    </transition>
+    <transition>
+      <from>1</from><to>1</to><read>a</read>
+    </transition>
+    <transition>
+      <from>1</from><to>1</to><read>b</read>
+    </transition>
+    <transition>
+      <from>2</from><to>2</to><read>a</read>
+    </transition>
+    <transition>
+      <from>2</from><to>2</to><read>b</read>
+    </transition>
+  </automaton>
+</structure>
