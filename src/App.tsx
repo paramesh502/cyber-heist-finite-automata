@@ -5,8 +5,9 @@ import MissionSelect from './components/screens/MissionSelect';
 import GameScreen from './components/screens/GameScreen';
 import JFLAPLab from './components/screens/JFLAPLab';
 import HowToPlay from './components/screens/HowToPlay';
+import WireCutter from './components/screens/WireCutter';
 
-type Screen = 'landing' | 'missions' | 'game' | 'jflap' | 'howtoplay' | 'results';
+type Screen = 'landing' | 'missions' | 'game' | 'jflap' | 'howtoplay' | 'results' | 'wirecutter';
 
 function AppContent() {
   const [screen, setScreen] = useState<Screen>('landing');
@@ -24,7 +25,8 @@ function AppContent() {
       {screen === 'missions'  && <MissionSelect  onNavigate={navigate} />}
       {screen === 'game'      && <GameScreen     levelId={activeLevel} onNavigate={navigate} />}
       {screen === 'jflap'     && <JFLAPLab       onNavigate={navigate} />}
-      {screen === 'howtoplay' && <HowToPlay      onNavigate={navigate} />}
+      {screen === 'howtoplay'   && <HowToPlay      onNavigate={navigate} />}
+      {screen === 'wirecutter' && <WireCutter    onNavigate={navigate} />}
     </div>
   );
 }

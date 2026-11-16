@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useGame } from '../../store/GameContext';
 import { LEVELS } from '../../levels';
 
-type Screen = 'landing' | 'missions' | 'game' | 'jflap' | 'howtoplay' | 'results';
+type Screen = 'landing' | 'missions' | 'game' | 'jflap' | 'howtoplay' | 'results' | 'wirecutter';
 
 interface LandingScreenProps {
   onNavigate: (screen: Screen, levelId?: number) => void;
@@ -121,6 +121,14 @@ export default function LandingScreen({ onNavigate }: LandingScreenProps) {
             style={{ minWidth: '180px' }}
           >
             ❓ HOW TO PLAY
+          </button>
+
+          <button
+            className="btn btn-secondary btn-lg"
+            onClick={() => onNavigate('wirecutter')}
+            style={{ minWidth: '180px' }}
+          >
+            ✂ WIRE CUTTER
           </button>
         </div>
 
