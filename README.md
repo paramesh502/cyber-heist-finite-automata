@@ -1,22 +1,19 @@
 # Cyber Heist: Crack the Vault Using Finite Automata
 
-An educational puzzle game for Theory of Computation that teaches DFA, NFA, and JFLAP integration through an interactive cyberpunk heist storyline.
+> An educational puzzle game for Theory of Computation — teaches DFA, NFA, and epsilon transitions through an interactive cyberpunk heist storyline.
+
+**Live (local network):** `http://<your-machine-ip>:5173`  
+**GitHub:** https://github.com/paramesh502/cyber-heist-finite-automata
 
 ---
 
 ## Project Overview
 
-Players take the role of a cybersecurity specialist breaking into digital vaults — each protected by a Finite Automaton. To unlock a vault, the player must understand the automaton's state transitions and submit an accepted input string. The game teaches DFA, NFA, epsilon transitions, formal language theory, and string acceptance through 8 progressively challenging missions.
+Players are cybersecurity specialists breaking into digital vaults — each protected by a Finite Automaton. To unlock a vault, the player must understand the automaton's state transitions and submit an accepted input string.
 
-**Evaluation categories:**
-- JFLAP Implementation — 10 marks
-- GUI Implementation — 10 marks
+The game covers DFA, NFA, epsilon transitions, formal language theory, and string acceptance through 8 progressively challenging missions, plus a bonus DFA-builder mini-game called **Wire Cutter**.
 
----
-
-## Problem Statement
-
-Traditional Theory of Computation courses present finite automata as abstract mathematical objects. This project makes DFA and NFA tangible by embedding them in interactive puzzles with animated state diagrams, real automata simulation, and genuine JFLAP file integration.
+**Evaluation:** JFLAP Implementation (10 marks) + GUI Implementation (10 marks)
 
 ---
 
@@ -24,19 +21,21 @@ Traditional Theory of Computation courses present finite automata as abstract ma
 
 | Feature | Description |
 |---|---|
-| DFA Engine | Genuine delta(state,symbol)→nextState simulator with execution trace |
+| DFA Engine | `delta(state, symbol) → nextState` simulator with full execution trace |
 | NFA Engine | Subset-construction simulation tracking all reachable states simultaneously |
-| Epsilon Closures | Correct ε-closure computation for NFA with epsilon transitions |
-| 8 Game Levels | DFAs for pattern matching, parity, binary endings, mod-3 arithmetic; NFAs with epsilon |
+| Epsilon Closures | Correct ε-closure computation for NFAs with epsilon transitions |
+| 8 Game Levels | DFAs and NFAs covering patterns, parity, binary endings, mod-3 arithmetic, epsilon |
+| Wire Cutter Mini-Game | Build your own DFA from scratch — drag, drop, draw transitions, verify against test cases |
 | Animated State Diagrams | SVG-based interactive visualizations with highlighted active states |
 | Step-by-step Simulation | Play / Pause / Step / Run Full / Adjust Speed controls |
-| Execution Trace Table | Shows each step's from-state, to-state, symbol, and accepting status |
-| JFLAP Export | Generates valid .jff XML files for all 8 automata |
-| JFLAP Import | Parses .jff files from JFLAP into the game engine for testing |
-| Scoring System | 100/80/75/60 points based on attempts and hints used |
-| Progress Persistence | All progress saved to localStorage; survives browser refresh |
+| Execution Trace Table | Every step's from-state, to-state, symbol, and accepting status |
+| JFLAP Export | Generates valid `.jff` XML files for all 8 automata |
+| JFLAP Import | Parses `.jff` files from JFLAP back into the game engine |
+| Scoring System | 100 / 80 / 75 / 60 points based on attempts and hints used |
+| Progress Persistence | All progress saved to `localStorage` — survives browser refresh |
 | Achievements | 8 achievements including NFA Master, Epsilon Lord, Vault Cracked |
-| How to Play | Multi-section tutorial with glossary |
+| How to Play | 9-section tutorial with full glossary |
+| Local Network Access | Run on Wi-Fi — any device on the network can play |
 | 147 Automated Tests | DFA, NFA, epsilon, JFLAP, validation, and all level test cases |
 
 ---
@@ -47,8 +46,8 @@ Traditional Theory of Computation courses present finite automata as abstract ma
 |---|---|
 | Framework | React 19 with TypeScript |
 | Build Tool | Vite 8 |
-| Styling | Custom CSS with CSS variables (cyberpunk theme) |
-| Animations | Framer Motion (installed) + CSS animations |
+| Styling | Custom CSS with CSS variables (cyberpunk dark theme) |
+| Animations | CSS keyframe animations |
 | State Diagrams | SVG (hand-coded, no external graph library) |
 | State Management | React Context + useReducer |
 | Persistence | localStorage |
@@ -59,8 +58,8 @@ Traditional Theory of Computation courses present finite automata as abstract ma
 ## Installation
 
 ```bash
-git clone <repository-url>
-cd FLA_endsem
+git clone https://github.com/paramesh502/cyber-heist-finite-automata.git
+cd cyber-heist-finite-automata
 npm install
 ```
 
@@ -69,7 +68,7 @@ npm install
 ## Commands
 
 ```bash
-# Start development server
+# Start development server (accessible on local network)
 npm run dev
 
 # Build for production
@@ -78,52 +77,64 @@ npm run build
 # Run all automated tests
 npm test
 
-# Run tests in watch mode
-npm run test:watch
-
 # Preview production build
 npm run preview
 ```
 
-The development server starts at **http://localhost:5173**
+The dev server starts at **http://localhost:5173**  
+On local network (same Wi-Fi): **http://\<your-ip\>:5173**
+
+To find your IP:
+- **Mac:** `ipconfig getifaddr en0`
+- **Windows:** `ipconfig` → IPv4 Address
+- **Linux:** `hostname -I`
 
 ---
 
-## Game Architecture
+## Running on Local Network
+
+`vite.config.ts` has `host: true` set — this exposes the server on all network interfaces automatically. Just start `npm run dev` and share the Network URL printed in the terminal with anyone on the same Wi-Fi.
+
+---
+
+## Project Structure
 
 ```
 src/
 ├── engine/
-│   ├── types.ts          # Automaton data models (State, Transition, Automaton, etc.)
-│   ├── validate.ts       # Structural validation of automaton definitions
-│   ├── dfa.ts            # DFA execution engine: runDFA(), dfaDelta()
-│   ├── nfa.ts            # NFA engine: runNFA(), epsilonClosure(), nfaMove()
-│   └── index.ts          # Re-exports
+│   ├── types.ts          # Automaton data models
+│   ├── validate.ts       # Structural validation
+│   ├── dfa.ts            # DFA execution engine
+│   ├── nfa.ts            # NFA engine + epsilonClosure + nfaMove
+│   └── index.ts
 ├── levels/
 │   ├── types.ts          # Level type definitions
-│   ├── definitions.ts    # All 8 level definitions with automata and test cases
+│   ├── definitions.ts    # All 8 level definitions
 │   └── index.ts
 ├── jflap/
-│   ├── exporter.ts       # exportToJFLAP(): generates .jff XML
-│   ├── importer.ts       # importFromJFLAP(): parses .jff XML
+│   ├── exporter.ts       # exportToJFLAP() — generates .jff XML
+│   ├── importer.ts       # importFromJFLAP() — parses .jff XML
 │   └── index.ts
 ├── store/
-│   ├── gameStore.ts      # Scoring, achievements, localStorage persistence
-│   └── GameContext.tsx   # React Context and reducer for global state
+│   ├── gameStore.ts      # Scoring, achievements, localStorage
+│   └── GameContext.tsx   # React Context + reducer
 ├── hooks/
-│   └── useSimulation.ts  # Animation and step-by-step simulation logic
+│   └── useSimulation.ts  # Animated step-by-step simulation
 ├── components/
 │   ├── game/
-│   │   ├── AutomataViz.tsx     # SVG state diagram component
-│   │   ├── ExecutionTrace.tsx  # Trace table component
-│   │   ├── SimControls.tsx     # Play/Pause/Step/Speed controls
-│   │   └── HintPanel.tsx       # Progressive hint reveal
+│   │   ├── AutomataViz.tsx       # SVG state diagram
+│   │   ├── ExecutionTrace.tsx    # Trace table
+│   │   ├── SimControls.tsx       # Play/Pause/Step/Speed
+│   │   ├── HintPanel.tsx         # Progressive hints
+│   │   ├── DFABuilder.tsx        # Wire Cutter drag-drop canvas
+│   │   └── WireCutterEngine.ts   # Wire Cutter puzzles + checker
 │   └── screens/
-│       ├── LandingScreen.tsx   # Main menu
-│       ├── MissionSelect.tsx   # Level selection grid
-│       ├── GameScreen.tsx      # Main gameplay screen
-│       ├── JFLAPLab.tsx        # JFLAP integration lab
-│       └── HowToPlay.tsx       # Tutorial and glossary
+│       ├── LandingScreen.tsx
+│       ├── MissionSelect.tsx
+│       ├── GameScreen.tsx
+│       ├── JFLAPLab.tsx
+│       ├── HowToPlay.tsx
+│       └── WireCutter.tsx        # Wire Cutter mini-game screen
 └── tests/
     ├── dfa.test.ts       # 42 DFA tests
     ├── nfa.test.ts       # 98 NFA tests
@@ -132,98 +143,108 @@ src/
 
 ---
 
+## Game Levels
+
+| # | Title | Type | Language |
+|---|---|---|---|
+| 1 | Reconnaissance | DFA | Strings starting with 'a' |
+| 2 | Binary Access Code | DFA | Binary strings ending in "01" |
+| 3 | Parity Breach | DFA | Even number of 1s |
+| 4 | Pattern Recognition | DFA | Contains substring "101" |
+| 5 | Nondeterministic Vault | NFA | Starts with '0' OR ends in '1' |
+| 6 | Epsilon Chamber | NFA + ε | a\* ∪ b\* ∪ c\* |
+| 7 | Reverse Engineering | DFA | Binary value divisible by 3 |
+| 8 | Final Vault | NFA + ε | (ab)\* ∪ ends in "aa" |
+
+---
+
+## Wire Cutter Mini-Game
+
+Build your own DFA from scratch to match a target language description.
+
+| # | Puzzle | Language | Min States |
+|---|---|---|---|
+| 1 | First Signal | Contains at least one 'a' | 2 |
+| 2 | Binary Tail | Ends in '0' | 2 |
+| 3 | Triple Threat | Length divisible by 3 | 3 |
+| 4 | No Double Zero | No "00" substring | 3 |
+| 5 | Exact Length | Exactly length 2 | 4 |
+
+Controls: place states → draw transitions by dragging → double-click to toggle accepting → right-click to set initial → click **Check My DFA** to verify against real test cases using the game's own DFA engine.
+
+---
+
 ## DFA Implementation
 
-The DFA engine (`src/engine/dfa.ts`) implements the formal definition δ: Q × Σ → Q:
-
-```typescript
+```
 runDFA(automaton, input) → DFAResult
 ```
 
-1. Validate the automaton (unique states, valid initial/accepting states, no non-determinism)
-2. Validate input symbols against the alphabet
-3. Process each symbol: look up δ(currentState, symbol) in the transition map
-4. If any transition is missing → reject with "dead state" explanation
-5. After consuming all input → accept iff current state ∈ F
-
-The execution trace records every step as `{ fromState, toState, symbol, isAccepting }` for the animation and table display.
+1. Validate the automaton structurally
+2. Check all input symbols are in the alphabet
+3. For each symbol: look up `δ(currentState, symbol)` in the transition map
+4. Missing transition → reject with "dead state" explanation
+5. After all input → accept iff final state ∈ accepting states
 
 ---
 
 ## NFA Implementation
 
-The NFA engine (`src/engine/nfa.ts`) uses **subset construction simulation**:
-
-```typescript
+```
 runNFA(automaton, input) → NFAResult
 ```
 
-1. Compute ε-closure of the initial state → initial active state set
-2. For each input symbol:
-   a. For every active state, find all transitions on that symbol → next states
-   b. Compute ε-closure of all next states
-   c. The new active set is the result
-3. Accept if any state in the final active set is an accepting state
+1. Compute `ε-closure(initialState)` → initial active set
+2. For each symbol: `nfaMove(activeSet, symbol)` → `ε-closure(result)`
+3. Accept if any state in the final active set is accepting
 
-`epsilonClosure(automaton, stateSet)` computes reachability via ε-transitions using iterative DFS.
-
-This correctly explores ALL possible paths simultaneously — never arbitrarily picks one.
+`epsilonClosure()` uses iterative DFS over ε-transitions.  
+All reachable states are tracked simultaneously — never an arbitrary single path.
 
 ---
 
 ## JFLAP Integration
 
-### Export (.jff generation)
+### Export
 
-`exportToJFLAP(automaton)` generates standard JFLAP XML:
-
-```xml
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<structure>
-  <type>fa</type>
-  <automaton>
-    <state id="0" name="q0" x="..." y="...">
-      <initial/>
-    </state>
-    <state id="2" name="q2" x="..." y="...">
-      <final/>
-    </state>
-    <transition>
-      <from>0</from><to>1</to><read>0</read>
-    </transition>
-    <!-- Epsilon transitions use empty <read/> -->
-  </automaton>
-</structure>
+```
+JFLAP Lab → Select automaton → Export .jff
 ```
 
-### Import (.jff parsing)
+Generates valid JFLAP XML with `<state>`, `<initial/>`, `<final/>`, and `<transition>` elements. Epsilon transitions use `<read/>` (empty read tag).
 
-`importFromJFLAP(xmlString)` parses a JFLAP file, extracts states/transitions, detects DFA vs NFA, and returns an `Automaton` compatible with the game engine.
+### Verification workflow
 
-### Verification Workflow
+1. Click **JFLAP Lab** → select a level → **Export .jff**
+2. Open JFLAP (jflap.org) → **File → Open** → select the file
+3. **Input → Multiple Run** → paste test strings → **Run All**
+4. Results match the game's test case table exactly
 
-1. Select automaton in **JFLAP Lab** → click **Export .jff**
-2. Open JFLAP (download from jflap.org) → File → Open → select .jff file
-3. In JFLAP: Input → Multiple Run → enter strings from the test table
-4. Compare JFLAP results with game results — they match for all 8 automata
+### Import
 
-**What runs in the game:** DFA/NFA simulation, visualization, export, import  
-**What JFLAP adds:** Step-by-step visual runner, NFA→DFA conversion, minimization tools
+Upload any `.jff` file from JFLAP back into the game — the importer parses states, transitions, initial/accepting markers, and detects DFA vs NFA automatically.
+
+**What runs in-game:** simulation, visualization, export, import  
+**What JFLAP adds:** visual step-by-step runner, NFA→DFA conversion, minimization
 
 ---
 
-## Level Descriptions
+## JFLAP Files
 
-| # | Title | Automaton | Accepts |
-|---|---|---|---|
-| 1 | Reconnaissance | DFA, 3 states | Strings over {a,b} starting with "a" |
-| 2 | Binary Access Code | DFA, 3 states | Binary strings ending in "01" |
-| 3 | Parity Breach | DFA, 2 states | Binary strings with even number of 1s |
-| 4 | Pattern Recognition | DFA, 4 states | Binary strings containing substring "101" |
-| 5 | Nondeterministic Vault | NFA, 5 states | Strings starting with "0" OR ending in "1" |
-| 6 | The Epsilon Chamber | NFA+ε, 7 states | Strings that are a\*, b\*, or c\* |
-| 7 | Reverse Engineering | DFA, 3 states | Binary strings whose value is divisible by 3 |
-| 8 | Final Vault | NFA+ε, 7 states | Strings matching (ab)\* OR ending in "aa" |
+All 8 automata are pre-exported in `jflap_files/`:
+
+```
+jflap_files/
+├── Level1_Reconnaissance_DFA.jff
+├── Level2_BinaryAccessCode_DFA.jff
+├── Level3_ParityBreach_DFA.jff
+├── Level4_PatternRecognition_DFA.jff
+├── Level5_NondeterministicVault_NFA.jff
+├── Level6_EpsilonChamber_NFA.jff
+├── Level7_ReverseEngineering_DFA.jff
+├── Level8_FinalVault_NFA.jff
+└── VIVA_CHEATSHEET.md        ← step-by-step traces + viva Q&A
+```
 
 ---
 
@@ -234,44 +255,38 @@ npm test
 # → 147 tests pass across 3 test files
 ```
 
-Test coverage:
-- All level automata validated structurally
-- Every test case in every level verified against the engine
-- DFA edge cases: empty string, invalid symbols, missing transitions
-- NFA: epsilon closures, subset construction, single-character inputs
-- JFLAP: XML generation, round-trip export→import, error handling
+| File | Tests | Covers |
+|---|---|---|
+| `dfa.test.ts` | 42 | All DFA levels, edge cases, trace correctness, validation |
+| `nfa.test.ts` | 98 | All NFA levels, epsilon closure, move, all test cases |
+| `jflap.test.ts` | 7 | XML generation, round-trip export→import, error handling |
 
 ---
 
-## JFLAP Demonstration (Evaluation Guide)
+## JFLAP Demonstration Guide (Evaluation)
 
-1. Start the app: `npm run dev` → open http://localhost:5173
-2. Click **JFLAP LAB** from the main menu
-3. Select **Level 2 (Binary Access Code)**
-4. Click **Export .jff** — downloads `dfa-level2.jff`
-5. Open JFLAP → File → Open → `dfa-level2.jff`
-6. Verify: 3 states, q0 initial, q2 accepting, transitions match the diagram
-7. In JFLAP: Input → Multiple Run → test "01", "101", "10", "111"
-8. Compare with the game's test case table — all results identical
-9. Repeat for **Level 6 (epsilon)** to demonstrate NFA+ε export
+1. `npm run dev` → open http://localhost:5173
+2. Click **JFLAP Lab** → select **Level 2 (Binary Access Code)** → **Export .jff**
+3. Open JFLAP → **File → Open** → `dfa-level2.jff`
+4. Verify: 3 states, q0 initial, q2 accepting, all transitions correct
+5. **Input → Multiple Run** → test `01`, `101`, `10`, `111` → results match game
+6. Repeat for **Level 6** to demonstrate NFA + ε export
 
 ---
 
 ## Known Limitations
 
-- JFLAP cannot be launched directly from the browser (different application)
-- The game uses single-character alphabet symbols; multi-character labels (e.g., "ab") are not supported as a single symbol
-- The NFA visualization shows state sets but does not draw all simultaneous active transition arrows (only the last consumed transition's origin states)
-- The `dfaDelta` export function is available but the game internally uses the transition map directly
+- JFLAP cannot be embedded directly in the browser — the workflow is file-based (export → open in JFLAP)
+- Multi-character alphabet symbols are not supported (each symbol must be a single character)
+- NFA visualization shows active state sets but does not animate all simultaneous transition arrows
 
 ---
 
 ## Future Enhancements
 
 - Pushdown Automata (PDA) levels
-- Regular expression ↔ automata conversion
-- NFA → DFA conversion visualizer (subset construction table)
-- Minimization tool
-- Custom automaton builder (drag-and-drop state editor)
-- Leaderboard and multiplayer challenges
-- Mobile responsive layout
+- Regular expression ↔ automaton conversion visualizer
+- NFA → DFA subset construction table
+- Cipher Race mini-game (timed string testing)
+- Multiplayer heist mode
+- Mobile layout
