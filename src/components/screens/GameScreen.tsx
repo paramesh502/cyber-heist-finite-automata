@@ -2,6 +2,8 @@ import { useState, type KeyboardEvent } from 'react';
 import { LEVELS } from '../../levels';
 import { useGame } from '../../store/GameContext';
 import { useSimulation } from '../../hooks/useSimulation';
+import { runDFA } from '../../engine/dfa';
+import { runNFA } from '../../engine/nfa';
 import AutomataViz from '../game/AutomataViz';
 import ExecutionTrace from '../game/ExecutionTrace';
 import SimControls from '../game/SimControls';
@@ -47,15 +49,16 @@ export default function GameScreen({ levelId, onNavigate }: GameScreenProps) {
     sim.runFull();
     setShowResult(true);
 
-    // After runFull, result is synchronous
-    setTimeout(() => {
-      const accepted = sim.result?.accepted ?? false;
+    // Compute acceptance synchronously from the engine — no setTimeout needed.
+    const engineResult = level.automaton.type === 'DFA'
+      ? runDFA(level.automaton, sim.input)
+      : runNFA(level.automaton, sim.input);
+    const accepted = engineResult.errorMessage ? false : engineResult.accepted;
 
-      if (accepted && !missionComplete) {
-        setMissionComplete(true);
-        completeLevel(levelId, newAttempts, hintsUsed);
-      }
-    }, 50);
+    if (accepted && !missionComplete) {
+      setMissionComplete(true);
+      completeLevel(levelId, newAttempts, hintsUsed);
+    }
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
