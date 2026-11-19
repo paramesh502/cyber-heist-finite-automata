@@ -75,11 +75,28 @@ export function useSimulation(automaton: Automaton): UseSimulationReturn {
       const trace = nResult.trace;
       const s = trace[Math.min(step, trace.length - 1)] as NFATraceStep;
       if (!s.symbol) return [];
-      return s.fromStates.map((from) => ({
-        from,
-        to: s.toStates[0] ?? from,
-        symbol: s.symbol!,
-      }));
+      // For each (from, to) pair that is an actual transition on this symbol,
+      // emit one entry. This avoids always pinning every fromState to toStates[0].
+      const transitions: { from: string; to: string; symbol: string }[] = [];
+      for (const from of s.fromStates) {
+        for (const to of s.toStates) {
+          if (
+            automaton.transitions.some(
+              (t) => t.from === from && t.to === to && t.symbol === s.symbol
+            )
+          ) {
+            transitions.push({ from, to, symbol: s.symbol! });
+          }
+        }
+      }
+      // Fall back to pairing each from with the first toState when no direct
+      // transition match is found (e.g. reachability via ε-closure).
+      if (transitions.length === 0 && s.toStates.length > 0) {
+        for (const from of s.fromStates) {
+          transitions.push({ from, to: s.toStates[0], symbol: s.symbol! });
+        }
+      }
+      return transitions;
     }
   };
 
