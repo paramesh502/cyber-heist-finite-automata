@@ -4,6 +4,21 @@ import { LEVELS } from '../levels';
 import type { Automaton } from '../engine/types';
 
 // ─────────────────────────────────────────────────────────────
+// Test: Level 1 DFA — strings over {a,b} starting with 'a'
+// ─────────────────────────────────────────────────────────────
+const dfa_starts_a = LEVELS.find((l) => l.id === 1)!.automaton;
+
+describe('DFA: strings starting with "a"', () => {
+  it('accepts "a"',   () => expect(runDFA(dfa_starts_a, 'a').accepted).toBe(true));
+  it('accepts "ab"',  () => expect(runDFA(dfa_starts_a, 'ab').accepted).toBe(true));
+  it('accepts "aba"', () => expect(runDFA(dfa_starts_a, 'aba').accepted).toBe(true));
+  it('accepts "abb"', () => expect(runDFA(dfa_starts_a, 'abb').accepted).toBe(true));
+  it('rejects "b"',   () => expect(runDFA(dfa_starts_a, 'b').accepted).toBe(false));
+  it('rejects "ba"',  () => expect(runDFA(dfa_starts_a, 'ba').accepted).toBe(false));
+  it('rejects ""',    () => expect(runDFA(dfa_starts_a, '').accepted).toBe(false));
+});
+
+// ─────────────────────────────────────────────────────────────
 // Test: Level 2 DFA — binary strings ending in "01"
 // ─────────────────────────────────────────────────────────────
 const dfa_ends01 = LEVELS.find((l) => l.id === 2)!.automaton;
